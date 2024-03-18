@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+ <style> 
+    
+    body {
+      body{ 
+         
+        background-image: url('./fondo.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      background-image: url('./fondo.jpg');
+      background-position: center;
+      background-repeat: no repeat;
+      background-size: cover;
+      background-attachment: fixed;
+
+    }
+
+    textarea {
+      border-radius: 20px;
+      border-style: solid;
+      border-width: 5px;
+    }
+
+    .buttonEncriptar {
+      background-color: #F2840F;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 4px 2px;
+      margin: 4px;
+      cursor: pointer;
+    }
+
+    .buttonDesencriptar {
+      background-color: #F2BB0F;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .buttonCopiar {
+      background-color: #BFC148;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    #header {
+      font-size: 30px;
+      color: #272727;
+      font-style: italic;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1 id="header">Encriptador</h1>
+    <div class="row">
+      <div class="col-6">
+        <textarea name="" placeholder="Ingrese texto a encriptar" id="textEncriptar" class="form-control" rows="10"></textarea>
+        <div class="mt-2">
+          <button onclick="encriptarTexto()" id="botonEncriptar" class="btn btn-primary">
+            Encriptador
+          </button>
+          <button onclick="desencriptarTexto()" id="botonDescriptar" class="btn btn-secondary">
+            Descriptador
+          </button>
+        </div>
+      </div>
+      <div class="col-6">
+        <textarea name="" id="textResultado" class="form-control" rows="10" readonly></textarea>
+        <div class="mt-2">
+          <button onclick="copiarTexto()" id="botonCopiar" class="btn btn-success">Copiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer></footer>
+  <script>
+    const textoEncriptador = document.getElementById('textEncriptar');
+    const botonCopiarTexto = document.getElementById('botonCopiar');
+
+    const divEliminar = document.getElementById('texto-eliminar');
+    const vibrarDiv = document.getElementById('texto-final');
+    const auxiliarDiv = divEliminar.cloneNode(true); 
+
+    function encriptarTexto() {
+      const texto = textoEncriptador.value;
+      if(texto.trim() === '') {
+        alert('Debe ingresar una palabra');
+      } else {
+        const textoEncriptado = funcionEncriptar(texto);
+        document.getElementById('textResultado').value = textoEncriptado;
+      }
+    }
+
+    function desencriptarTexto() {
+      const texto = textoEncriptador.value;
+      if (texto.trim() === '') {
+        alert('Debe ingresar una palabra');
+      } else {
+        const textoDesencriptado = funcionDesencriptarTexto(texto);
+        document.getElementById('textResultado').value = textoDesencriptado;
+      }
+    }
+
+    function funcionEncriptar(texto) {
+      const mapEncriptacion = {
+       'a': 'ahi',
+       'e': 'enter',
+       'i': 'in',
+       'o': 'on',
+       'u': 'uff'
+      };
+      return texto.split('').map(l => mapEncriptacion[l] || l).join('');
+    }
+
+    function funcionDesencriptarTexto(texto) {
+      const mapDesencriptacion = {
+        'ahi': 'a',
+        'enter': 'e',
+        'in': 'i',
+        'on': 'o',
+        'uff': 'u'
+      };
+      return texto.replace(/ahi|enter|in|on|uff/g, match => mapDesencriptacion[match]);
+    }
+
+    function copiarTexto() {
+      const textoResultado = document.getElementById('textResultado');
+      textoResultado.select();
+      document.execCommand('copy');
+      textoResultado.value = "";
+      alert('Texto copiado al portapapeles');
+    }
+
+  </script>
+</body>
+
+</html>
